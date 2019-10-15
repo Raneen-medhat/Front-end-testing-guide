@@ -195,5 +195,12 @@
   [Read More About Testing React with Jest and Enzyme](https://medium.com/codeclan/testing-react-with-jest-and-enzyme-20505fec4675).
 
 
+----------------------------------------------------------------------------------------------------------------------------
+
+# Test Cases Examples
+  Here’s a simple App that takes any input from user and prints it in front of him. It also brings some data of users from     an API (“https://jsonplaceholder.typicode.com/users”).
+![alt text](https://drive.google.com/open?id=1EhjK8sjtOH6sLv4stDfOYgtKuSvJoR98)
+
+
 
 
