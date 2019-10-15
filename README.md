@@ -116,8 +116,8 @@
 
   5 - in **bable.config.js** write these lines:
   ```sh
-   module.exports = {
-    presets: ['@babel/preset-env', '@babel/preset-react'],
+    module.exports = {
+      presets: ['@babel/preset-env', '@babel/preset-react'],
     };
     }
 ```
@@ -177,5 +177,23 @@
    ```sh
    npm test -- --updateSnapshot
  ```
+
+----------------------------------------------------------------------------------------------------------------------------
+
+# Enzyme Configuration
+ ** Install Enzyme:**
+  ```sh
+   npm install --save-dev enzyme enzyme-adapter-react-16 enzyme-to-json
+ ```
+
+ - Create a setupTests.js file at ./src/setupTests.js and write in it:
+  ```sh
+   import { configure } from 'enzyme';
+   import Adapter from 'enzyme-adapter-react-16';
+   configure({ adapter: new Adapter() });
+ ```
+  [Read More About Testing React with Jest and Enzyme](https://medium.com/codeclan/testing-react-with-jest-and-enzyme-20505fec4675).
+
+
 
 
