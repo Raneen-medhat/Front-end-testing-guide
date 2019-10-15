@@ -42,6 +42,8 @@
 
 
      ### Some other types of testing:
-      - **Manual :  A human being actually going through and verifying a flow on a real device.
-      - **Snapshot: Verifying a component’s rendered output.
-      - **Static:   Testing pre compile-time (ESLint, TypeScript).
+      - **Manual :  A human being actually going through and verifying a flow on a real device.**
+      - **Snapshot: Verifying a component’s rendered output.**
+      - **Static:   Testing pre compile-time (ESLint, TypeScript).**
+      for more Information about testing types  : [Read this article](https://itnext.io/react-redux-integration-tests-with-jest-enzyme-df9aa6effd13).
+
