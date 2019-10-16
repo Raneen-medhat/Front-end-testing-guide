@@ -122,8 +122,9 @@
     }
 ```
  6 - To make sure your jest config is successfully
-    - create a new folder called __tests__ in your src folder because by default jest looks for __tests__ folder in your           project and runs all tests present inside that folder.
-    **Update App.js with :**
+      
+  - create a new folder called __tests__ in your src folder because by default jest looks for __tests__ folder in your           project and runs all tests present inside that folder.
+        **Update App.js with :**
 
   ```sh
   import React, { Component } from 'react';
@@ -181,7 +182,7 @@
 ----------------------------------------------------------------------------------------------------------------------------
 
 # Enzyme Configuration
- ** Install Enzyme:**
+ **Install Enzyme:**
   ```sh
    npm install --save-dev enzyme enzyme-adapter-react-16 enzyme-to-json
  ```
@@ -199,8 +200,366 @@
 
 # Test Cases Examples
   Here’s a simple App that takes any input from user and prints it in front of him. It also brings some data of users from     an API (“https://jsonplaceholder.typicode.com/users”).
-![alt text](https://drive.google.com/open?id=1EhjK8sjtOH6sLv4stDfOYgtKuSvJoR98)
+
+  ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image4.png)
+
+
+  ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image1.png)
+
+
+ **Here’s the code section:**
+
+  ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image3.png)
+
+
+## 1 - "Input field is required" test case: 
+  **Test Case Target:** if user didn’t fill the input field he will get validation message
+
+   1 -  Wrap the App component to see data in it.
+   2 -  check that the attribute "required"  is there.
+
+   ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image2.png)
 
 
 
 
+
+## 2 - "check that minimum length of input is 5" test case: 
+   **Test Case Target:** If user fills the input field with less than 5 char he would get a validation message.
+
+  1 - find the input field 
+  2 - check it has the attribute minLength  = “5”
+
+  ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image6.png)
+
+
+
+
+
+## 3 - "Check that when input is null when submitted" test case: 
+   **Test Case Target:** the input field does not submit empty value.
+  
+  1 - find the input field 
+
+  2 - simulate the value of input field with “ ” which means null
+
+  3 - find the button 
+
+  4 - simulate the click action on button 
+
+  5 - Should pop up the required attribute
+
+ ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image5.png)
+
+
+
+
+
+## 4 - "check that state is updated with input value when submitted" test case: 
+   **Test Case Target:** update state with input value.
+
+  1 - find the input field.
+
+  2 - simulate the input field with value “ merna ”.
+
+  3 - simulate the button click.
+
+  4 - setState with value “ merna ”.
+
+  5 - check that the state.name is equal to “ merna ”.
+
+ ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image8.png)
+
+
+  **Another Way**
+
+ ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image2.png)
+
+
+
+
+
+## 5 - "check that “ real api ” returns status code of 200" test case: 
+   **Test Case Target:** check that api is valid and returns response.
+
+
+  ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image7.png)
+
+  1 - instance() is a function that returns all the data inside a component including any data outside the render function
+  2 - fire the postData function
+
+  3 - check that status returned from function fire equals to 200 which means api was successfully called and returned users       data 
+
+  **Below you can see other test cases examples from another app**
+
+  ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image9.png)
+
+
+
+
+
+
+## 6 - "check that api has been called one time" test case: 
+   **Test Case Target:** check api is called one time.
+
+  ```sh
+    it(‘api has been called one time’, () => {
+    const spy = jest.spyOn(api, "fetchSearchResult");
+    expect(spy).toHaveBeenCalledTimes(1)
+  })
+ ```
+
+
+
+
+
+## 7 - "Check that api has been called" test case: 
+   **Test Case Target:** check that api is valid and returns response.
+
+   **Note:** 
+     This case  has the same target of Fifth case test but here we test url not method, 
+     Using mockAxios.get:   for mocking axios get method
+     We assume searchValue to equal react, then mock axios get method.
+
+  ```sh
+    import mockAxios from ‘axios’;
+    it(‘api has been called’, () => {
+    const searchValue = "react";
+    expect(mockAxios.get).toHaveBeenCalledWith(
+          https://www.googleapis.com/books/v1/volumes?q=${searchValue}`,
+     );
+      }) 
+      })
+    })
+   ```
+
+
+
+
+
+## 8 - "Check that user filled input field,  then user clicked on search button, and the api has been called" test case: 
+   **Test Case Target:** response return from api after click on the search button with specific search value.
+
+  **SearchBar component:**
+
+  
+  ```sh
+      import React from "react";
+      import { onFetchSearchResult } from "../store/actions/";
+      import { connect } from "react-redux";
+
+      class SearchBar extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+         state = {
+          searchBox: ""
+        };
+       getSearchResult = (value, e) => {
+          e.preventDefault();
+          this.props.onFetchSearchResult(value);
+        };
+
+        handleChange = e => {
+          return this.setState({ searchBox: e.target.value });
+        };
+
+        render() {
+          console.log(this.state.searchBox, this.props.searchResult);
+          return (
+            <div className="container">
+              <nav className="navbar navbar-light bg-light">
+                <form
+                  className="form-inline"
+                  onSubmit={e => {
+                    this.getSearchResult(this.state.searchBox, e);
+                  }}
+                >
+                  <input
+                  id='searchInput'
+                    className="form-control mr-sm-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    onChange={this.handleChange}
+                    value={this.state.searchBox}
+                  />
+                  <button
+                    className="btn btn-outline-success my-2 my-sm-0"
+                    type="submit"
+                  >
+                    Search
+                  </button>
+                </form>
+              </nav>
+            </div>
+          );
+        }
+      }
+   ```
+
+
+  **Note:**
+    In this app we use react-redux for store, so  we need to mock store to complete the test case, so you can ask me how to     mock store?!
+
+   1 - install redux-mock-store library via command :
+     
+  ```sh
+     npm i --save redux-mock-store
+  })
+ ```
+
+   2 - import configureStore from 'redux-mock-store' . 
+   3 - put configureStore in variable.
+        
+  ```sh
+     npm i --save redux-mock-store
+ ```
+  Then set initialState
+
+  ```sh
+      Const initialState = {};
+ ```
+                    
+  4 - In describe run mockStore in beforeEach() method -you can use this method if you want to run anything before each it         part in one describe-   store =mockStore(initialState).
+  5 - You should add store in each component you want to test.
+
+   ```sh
+    mount(<SearchBar store={store} />).
+    const initialState = {};
+    const mockStore = configureStore();
+    let store, container;
+    describe("User filled input field ,then clicked submit, and api return         with response", () => {
+    beforeEach(() => {
+      store = mockStore(initialState);
+    });
+ 
+    it("search value should be found, api has been called", () => {
+      const container = mount(<SearchBar store={store} />)
+      const form = container.find("form");
+      const input = form.find("input");
+      const wrapper = container.find("SearchBar");
+      wrapper.instance().setState({ searchBox: "merna" });
+ 
+      expect(wrapper.instance().state.searchBox).toBe("merna");
+ 
+      const inputValue = input.simulate("change", 
+                             { target: { value:"react books" } });
+      const item = input.instance().value;
+      expect(item).toBe("react books");
+ 
+      const button = container.find(‘button’).simulate(‘click’)
+ 
+      const spy = jest.spyOn(api, "fetchSearchResult");
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+  });
+  ```
+
+
+
+
+
+
+## 9 - "Check that  response return from api in special format" test case: 
+   **Test Case Target:** response return as an object.
+
+  1 - Fire “fetchSearchResult” 
+  2 - expect response to equal special format
+
+   ```sh
+     it("Response return from api", () => {
+     api.fetchSearchResult().then(response => {
+     expect(response).toEqual( {"data": {}});
+    });  
+   });
+ ```
+
+
+
+
+
+
+## 10 - "Check that  action is firing" test case: 
+   **Test Case Target:** some action is firing.
+
+  **The action creator**
+   ```sh
+     it("Response return from api", () => {
+     api.fetchSearchResult().then(response => {
+     expect(response).toEqual( {"data": {}});
+    });  
+   });
+ ```
+
+  ![alt text](https://github.com/Raneen-medhat/Front-end-testing-guide/blob/master/image10.png)
+
+ **Applying test for it**
+
+  1 -  assign “dummy” value to a constant
+  2 - create an action creator that takes action type and action payload
+  3 - test that “onFetchSearchResult” is the same format as the action creator we assumed in our test
+
+   ```sh
+    describe("actions", () => {
+    it("create action to call saga", () => {
+    const searchValue = "text";
+    const actionCreator = { type: FETCH_SEARCH_RESULT_SAGA, searchValue };
+    expect(onFetchSearchResult(searchValue)).toEqual(actionCreator);
+    });
+   });
+ ```
+
+----------------------------------------------------------------------------------------------------------------------------
+
+# Errors
+### If case you face errors like these, you can apply these steps to resolve it:
+
+
+  **## Error:** 
+  **Add @babel/plugin-proposal-class-properties (https://git.io/vb4SL) to the 'plugins' section of your Babel config to         enable transformation"**
+
+  **## Solve:**
+    **1 - Install this libraryL**
+
+     ```sh
+      npm install --save-dev @babel/plugin-proposal-class-properties
+     ```
+
+   **2 - Add to babel.config.js file this line**
+
+     ```sh
+       Module.experts = {
+        plugins : [
+         [ “@babel/plugin-proposal-class-properties”]
+        ],
+        }
+     ```
+
+
+
+
+
+  **## Error:** 
+    **ReferenceError: regeneratorRuntime is not defined**
+
+   **## Solve:**
+      **in bable.config.js add in plugins:**
+
+   ```sh
+       plugins: [
+      ["@babel/plugin-proposal-class-properties"],
+      ["@babel/transform-runtime"]
+        ]
+   ```
+
+
+
+
+
+  **## Error:** 
+    **For testing real API If you use the GET method in your component and don't get any response**
+
+   **## Solve:**
+      **you must return the result 
+        Example: return axios.get(“..............”)**
